@@ -65,38 +65,40 @@ int main()
 
     char Menu;
 
-    printf("Menu Options:\nA: Specify the filename to be imported\nB: Display the total number of records in the file\nC: Find the date and time of the timeslot with the fewest steps\nD: Find the date and time of the timeslot with the largest number of steps\nE: Find the mean step count of all the records in the file\nF: Find the longest continuous period where the step count is above 500 steps\nQ: Quit\n");
 
-    printf("Enter Choice: ");
-    scanf("%c", &Menu);
+    // NEED TO PUT A LOOP THAT ONLY EXITS IF INPUT IS RIGHT OR Q
+    while (Menu != 'Q'&& Menu != 'A'&& Menu != 'B'&& Menu != 'C'&& Menu != 'D'&& Menu != 'E'&& Menu != 'F') {
+        printf("Menu Options:\nA: Specify the filename to be imported\nB: Display the total number of records in the file\nC: Find the date and time of the timeslot with the fewest steps\nD: Find the date and time of the timeslot with the largest number of steps\nE: Find the mean step count of all the records in the file\nF: Find the longest continuous period where the step count is above 500 steps\nQ: Quit\n");
 
+        printf("Enter Choice: ");
+        scanf("%c", &Menu);
 
-    switch (Menu)
-    {
-        case 'A' : printf("menu 1 \n");
-        break;
+        switch (Menu)
+        {
+            case 'A' : printf("menu 1 \n");
+            break;
 
-        case 'B' : printf("menu 2 \n");
-        break;
+            case 'B' : printf("menu 2 \n");
+            break;
 
-        case 'C' : printf("menu 3 \n");
-        break;
+            case 'C' : printf("menu 3 \n");
+            break;
 
-        case 'D' : printf("menu 4 \n");
-        break;
+            case 'D' : printf("menu 4 \n");
+            break;
 
-        case 'E' : printf("menu 5 \n");
-        break;
+            case 'E' : printf("menu 5 \n");
+            break;
 
-        case 'F' : printf("menu 6 \n");
-        break;
+            case 'F' : printf("menu 6 \n");
+            break;
 
-        case 'Q' : printf("menu 7 \n");
-        break;
+            case 'Q' : printf("menu 7 \n");
+            break;
 
-        default: printf("Invalid Choice. Try Again.\n");
-     }
-
+            default: printf("\nInvalid Choice. Try Again.\n");
+        }
+    }
 
     fclose(file);
     return 0;
