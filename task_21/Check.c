@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "FitnessDataStruct.h"
 
 char date[11];
 char time[10];
@@ -11,7 +10,6 @@ char steps [5];
 // This is your helper function. Do not change it in any way.
 // Inputs: character array representing a row; the delimiter character
 // Ouputs: date character array; time character array; steps character array
-
 void tokeniseRecord(const char *input, const char *delimiter,
                     char *date, char *time, char *steps) {
     char *inputCopy = strdup(input);
@@ -28,6 +26,7 @@ void tokeniseRecord(const char *input, const char *delimiter,
     }
     free(inputCopy);
 }
+
 
 
 int main()
@@ -62,23 +61,31 @@ int main()
         stepsint = atoi(steps);
         printf("%s/%s/%d\n", date, time, stepsint);
     }
-
+    char inputfilename [50];
     char Menu;
 
-
-    // NEED TO PUT A LOOP THAT ONLY EXITS IF INPUT IS RIGHT OR Q
     while (Menu != 'Q'&& Menu != 'A'&& Menu != 'B'&& Menu != 'C'&& Menu != 'D'&& Menu != 'E'&& Menu != 'F') {
         printf("Menu Options:\nA: Specify the filename to be imported\nB: Display the total number of records in the file\nC: Find the date and time of the timeslot with the fewest steps\nD: Find the date and time of the timeslot with the largest number of steps\nE: Find the mean step count of all the records in the file\nF: Find the longest continuous period where the step count is above 500 steps\nQ: Quit\n");
 
         printf("Enter Choice: ");
         scanf("%c", &Menu);
 
+
+
         switch (Menu)
         {
-            case 'A' : printf("menu 1 \n");
+            case 'A' : 
+                printf("Input filename: ");
+                scanf("%s", inputfilename);
+                if (filename == 'FitnessData_2023.csv') 
+                {
+                    printf("File sucessfully loaded.\n");
+                }
+                else
+                    printf("Error: Could not find or open file.\n");
             break;
 
-            case 'B' : printf("menu 2 \n");
+            case 'B' : printf("%d\n", j);
             break;
 
             case 'C' : printf("menu 3 \n");
