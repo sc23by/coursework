@@ -38,6 +38,8 @@ int main()
 {
     char record[buffer_size];
 
+    char filename [100];
+    FILE *file;
     while (1)
     {
         printf("Menu Options:\nA: Specify the filename to be imported\nB: Display the total number of records in the file\nC: Find the date and time of the timeslot with the fewest steps\nD: Find the date and time of the timeslot with the largest number of steps\nE: Find the mean step count of all the records in the file\nF: Find the longest continuous period where the step count is above 500 steps\nQ: Quit\n");
@@ -48,6 +50,7 @@ int main()
         switch (Menu)
         {
             case 'A' : 
+
             printf("Input filename: ");
             scanf("%s", filename);
             file = fopen(filename, "r");
@@ -62,7 +65,6 @@ int main()
                 printf("File sucessfully loaded.\n");
             }
             break;
-
 
             case 'B' : 
             j = 0;

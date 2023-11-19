@@ -2,41 +2,52 @@
 
 char date[11];
 char time[10];
-char steps[5];
-
-int j;
-int stepsint;
-
-int buffer_size = 100;
-
-int minsteps = 10000;
-char mindate[11];
-char mintime[10];
-
-int maxsteps = 0;
-char maxdate[11];
-char maxtime[10];
-    
-float totalsteps = 0;
-float meansteps;
-int intmeansteps;
-
-char startdate[11];
-char starttime[10];
-char enddate[11];
-char endtime[10];
-int currentsteps = 0;
-int currentlongeststeps;
-char prevenddate[11];
-char prevendtime[10];
-char prevstartdate[11];
-char prevstarttime[10];    
-
-char Menu;
+char steps [5];
 
 int main()
 {
+    int j;
+    int stepsint;
+
+    char filename [] = "FitnessData_2023.csv";
+    FILE *file = fopen(filename, "r");
+    if (file == NULL)
+    {
+        perror("");
+        return 1;
+    }
+
+    int buffer_size = 100;
+
     char record[buffer_size];
+
+    rewind (file);
+
+    int minsteps = 10000;
+    char mindate[11];
+    char mintime[10];
+
+    int maxsteps = 0;
+    char maxdate[11];
+    char maxtime[10];
+    
+    float totalsteps = 0;
+    float meansteps;
+    int intmeansteps;
+
+    char startdate[11];
+    char starttime[10];
+    char enddate[11];
+    char endtime[10];
+    int currentsteps = 0;
+    int currentlongeststeps;
+    char prevenddate[11];
+    char prevendtime[10];
+    char prevstartdate[11];
+    char prevstarttime[10];    
+
+    char Menu;
+
 
     while (1)
     {
@@ -48,6 +59,8 @@ int main()
         switch (Menu)
         {
             case 'A' : 
+            fclose (file);
+
             printf("Input filename: ");
             scanf("%s", filename);
             file = fopen(filename, "r");
@@ -56,6 +69,7 @@ int main()
             {
                 printf("Error: Could not find or open the file.\n");
                 return 1;
+
             }
             else
             {
@@ -86,6 +100,7 @@ int main()
                 strcpy(mindate, date);
                 strcpy(mintime, time);
                 }
+
             }            
 
             printf("Fewest steps: %s %s\n", mindate, mintime);
@@ -109,6 +124,7 @@ int main()
             printf("Largest steps: %s %s\n", maxdate, maxtime);   
             rewind (file);     
             break;
+
 
             case 'E' :
             totalsteps = 0;
@@ -135,6 +151,7 @@ int main()
             rewind (file);           
             break;
 
+
             case 'F':
             currentsteps = 0;
             currentlongeststeps = 0;
@@ -152,7 +169,8 @@ int main()
                         strcpy(prevstartdate, date);
                         strcpy(prevstarttime, time);
                     }
-                   
+                
+                    
                 } 
                 else 
                 {
