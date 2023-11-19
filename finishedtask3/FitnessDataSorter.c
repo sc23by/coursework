@@ -23,11 +23,6 @@ void tokeniseRecord(char *record, char delimiter, char *date, char *time, int *s
     }
 }
 
-// Comparison function for qsort
-int compareSteps(const void *a, const void *b) {
-    return ((FITNESS_DATA*)b)->steps - ((FITNESS_DATA*)a)->steps;
-}
-
 int main() {
     char filename[100];
 
