@@ -8,39 +8,35 @@ typedef struct {
     int steps;
 } FITNESS_DATA;
 
-void tokeniseRecord(char *record, char delimiter, char *date, char *time, int *steps) {
-    char *ptr = strtok(record, &delimiter);
-    if (ptr != NULL) {
-        strcpy(date, ptr);
-        ptr = strtok(NULL, &delimiter);
-        if (ptr != NULL) {
-            strcpy(time, ptr);
-            ptr = strtok(NULL, &delimiter);
-            if (ptr != NULL) {
-                *steps = atoi(ptr);
-            }
-        }
+void tokeniseRecord(const char *input, const char *delimiter,
+                    char *date, char *time, char *steps) {
+    char *inputCopy = strdup(input);
+    char *token = strtok(inputCopy, delimiter);
+    if (token != NULL) {        strcpy(date, token);
     }
+    token = strtok(NULL, delimiter);
+    if (token != NULL) {
+        strcpy(time, token);
+    }
+    token = strtok(NULL, delimiter);
+    if (token != NULL) {
+        strcpy(steps, token);
+    }
+    free(inputCopy);
 }
 
-// Comparison function for qsort
-int compareSteps(const void *a, const void *b) {
-    return ((FITNESS_DATA*)b)->steps - ((FITNESS_DATA*)a)->steps;
-}
 
 int main() {
     char filename[100];
 
-
+    char steps[100];
     int buffer_size = 100;
     char record[buffer_size];
+    int j = 0;
 
     printf("Input filename: ");
     scanf("%s", filename);
     FILE * file = fopen(filename, "r");
-
-    int j = 0;
-
     if (file == NULL) {
         printf("Error: invalid file\n");
         return 1;
@@ -56,17 +52,24 @@ int main() {
 
     for (int i = 0; i < j; i++) {
         fgets(record, buffer_size, file);
-        int steps;
-        tokeniseRecord(record, ',', data[i].date, data[i].time, &steps);
-        data[i].steps = steps;
+        tokeniseRecord(record, ",", data[i].date, data[i].time, steps);
+        data[i].steps = atoi(steps);
     }
 
     fclose(file);
-
-    // Sort the data array in descending order based on steps
-    qsort(data, j, sizeof(FITNESS_DATA), compareSteps);
-
-    // Print the sorted data
+    int k, a;
+    for (int i = 0; i < j; ++i) 
+    {
+        for (k = i + 1; k < j; ++k) 
+        {
+            if (data[i].steps < data[k].steps) 
+            {
+                a = data[i].steps;
+                data[i].steps = data[k].steps;
+                data[k].steps = a;
+            }
+        }
+    }
 
     char tsv[] = ".tsv";
     char newfilename[100];

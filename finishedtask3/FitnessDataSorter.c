@@ -23,6 +23,10 @@ void tokeniseRecord(char *record, char delimiter, char *date, char *time, int *s
     }
 }
 
+int compareSteps(const void *a, const void *b) {
+    return ((FITNESS_DATA*)b)->steps - ((FITNESS_DATA*)a)->steps;
+}
+
 int main() {
     char filename[100];
 
@@ -57,19 +61,8 @@ int main() {
     }
 
     fclose(file);
-    int k, a;
-    for (int i = 0; i < j; ++i) 
-    {
-        for (k = i + 1; k < j; ++k) 
-        {
-            if (data[i].steps < data[k].steps) 
-            {
-                a = data[i].steps;
-                data[i].steps = data[k].steps;
-                data[k].steps = a;
-            }
-        }
-    }
+
+    qsort(data, j, sizeof(FITNESS_DATA), compareSteps);
 
     char tsv[] = ".tsv";
     char newfilename[100];
