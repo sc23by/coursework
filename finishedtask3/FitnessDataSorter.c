@@ -8,19 +8,21 @@ typedef struct {
     int steps;
 } FITNESS_DATA;
 
-void tokeniseRecord(char *record, char delimiter, char *date, char *time, int *steps) {
-    char *ptr = strtok(record, &delimiter);
-    if (ptr != NULL) {
-        strcpy(date, ptr);
-        ptr = strtok(NULL, &delimiter);
-        if (ptr != NULL) {
-            strcpy(time, ptr);
-            ptr = strtok(NULL, &delimiter);
-            if (ptr != NULL) {
-                *steps = atoi(ptr);
-            }
-        }
+void tokeniseRecord(const char *input, const char *delimiter,
+                    char *date, char *time, char *steps) {
+    char *inputCopy = strdup(input);
+    char *token = strtok(inputCopy, delimiter);
+    if (token != NULL) {        strcpy(date, token);
     }
+    token = strtok(NULL, delimiter);
+    if (token != NULL) {
+        strcpy(time, token);
+    }
+    token = strtok(NULL, delimiter);
+    if (token != NULL) {
+        strcpy(steps, token);
+    }
+    free(inputCopy);
 }
 
 int compareSteps(const void *a, const void *b) {
@@ -44,9 +46,41 @@ int main() {
         printf("Error: invalid file\n");
         return 1;
     }
-
-    while (fgets(record, buffer_size, file) != NULL) {
+    
+    while (fgets(record, buffer_size, file) != NULL) 
+    {
         j++;
+    }
+
+    rewind (file);
+
+    char date[11];
+    char time[6];
+    char steps[5];
+
+    while (fgets(record, buffer_size, file) != NULL) 
+    {
+        tokeniseRecord(record, ",", date, time, steps);
+        if(strchr(date, '-') == NULL)
+        {
+            printf("Error: invalid file\n");
+            return 1;
+        }
+        if(strchr(time, ':') == NULL)
+        {
+            printf("Error: invalid file\n");
+            return 1;
+        }
+        if(strchr(steps, ':') != NULL)
+        {
+            printf("Error: invalid file\n");
+            return 1;
+        }
+        if(strchr(steps, '-') != NULL)
+        {
+            printf("Error: invalid file\n");
+            return 1;
+        }
     }
 
     rewind(file);
@@ -55,9 +89,9 @@ int main() {
 
     for (int i = 0; i < j; i++) {
         fgets(record, buffer_size, file);
-        int steps;
-        tokeniseRecord(record, ',', data[i].date, data[i].time, &steps);
-        data[i].steps = steps;
+        tokeniseRecord(record, ",", data[i].date, data[i].time, steps);
+        int stepsint = atoi(steps);
+        data[i].steps = stepsint;
     }
 
     fclose(file);
