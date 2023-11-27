@@ -17,3 +17,10 @@
                             // Store the current date and time for the next iteration
                 strcpy(prevenddate, date);
                 strcpy(prevendtime, time);
+
+
+            if(strchr(steps, '0') != NULL && strchr(steps, '1') != NULL && strchr(steps, '2') != NULL && strchr(steps, '3') != NULL && strchr(steps, '4') != NULL && strchr(steps, '5') != NULL && strchr(steps, '6') != NULL && strchr(steps, '7') != NULL && strchr(steps, '8') != NULL && strchr(steps, '9') != NULL)
+        {
+            printf("Error: invalid file\n");
+            return 1;
+        }
