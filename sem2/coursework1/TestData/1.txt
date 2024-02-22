@@ -1,4 +1,0 @@
-USING MAP 1 AS TEST TESTING
-
-want to check
-mov
