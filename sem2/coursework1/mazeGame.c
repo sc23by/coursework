@@ -1,108 +1,198 @@
-//include librarys
-#include "Library.h"
-
-int getMap () { // choose a map and select it
-
-    // show user selection of maps and ask to select one
-
-    // check if input is valid/ invlaid
-    // invalid print Error: Invalid Map selection and show selection of maps again
-    // if valid use selection to open map file
-
-    // check if map can be openened
-    // if not show error
-    // if yes open
+// include librarys
+#include <stdio.h>
+#include <stdlib.h>
 
 
+// struct for maze maps
+typedef struct {
+    char mapCharacters [100][100];
+} maze;
+// map size max 100 rectangle
+
+
+int getMap (char mapName) // input is a map name, opens it, and checks some requirements
+{ 
+    // print selected mapName 
+    // open file mapName
+    // if file mapName = NULL
+    // print error code
+    // return 1
+
+    // check map is not too small or big
+    // read file mapName and 
+    // if length < 5 or length > 100
+    // print error code
+    // return 1
+
+    // store map contents in struct
+
+    // check map contains exactly one S and F
+    // if map does not contain one S or one F
+    // print error code
+    // return 1
+
+    // check map has all rows same length and columns same length
+    // if not all rows are the same length
+    // print error code
+    // return 1
+
+    //return 0
 }
 
-int mapValidator () {  //check that map is not too small (height/width < 5)
-
-    // for loop i < 5 loop map does not == NULL
-    // print error if map is too small
-
-        //could this be a part of getMap?
+void showInstructions () //shows instructions
+{ 
+    // print instructions on w,a,s,d,m,q
 }
 
-int showInstructions () { //show instructions to user
-
-    // print list of instructions on W,A,S,D,M,Q
-    //use when there is an invalid input to remind user of valid inputs
-
+void showMap () //shows map
+{ 
+    //print map
+    //using nested for loops to print a 2d array
 }
 
-int showMap () { // show map to user
-    // use at start when map is selected
-    // when M is clicked, show current map to user
-    // include there current position using X
-
-    // use nested loop to print 2d array
-
-
-}
-
-void movement () { //WASD movement
-    // define what each letter does and what happens when pressed
-    // using switch
+int checkMovement (char input, int placeHolder) { 
+    // input goes to switch then does some checks to see if valid 
+    // then goes to movement function to do the movements if they are valid
+    // then new placeHolder value is returned
     
-    // W = up
-    // A = left
-    // S = down
-    // D = right
+    // read current position in maze [i][j] 
+    // store as [i] = int oldi and [j] = int oldj
 
-    //then goes to checkMovement to check if able to move
+
+    // switch (input)
+
+        //case w
+        // in 2d array [j] (column) increase by 1
+        // store [i] = int new i and [j] = int new j
+        // read character (newPlace = character)
+        // return newPlace
+
+        //case a
+        // in 2d array [i] (column) decreases by 1
+        // store [i] = int new i and [j] = int new j
+        //read character (newPlace = character)
+        //return newPlace
+
+        //case s
+        // in 2d array [j] (column) decreases by 1
+        // store [i] = int new i and [j] = int new j
+        //read character (newPlace = character)
+        //return newPlace
+
+        //case d
+        // in 2d array [i] (column) increase by 1
+        // store [i] = int new i and [j] = int new j
+        //read character (newPlace = character)
+        //return newPlace
+
+
+    // if newPlace = '#' 
+    // print error code
+
+    // if newPlace ' '
+    // movement(oldi,oldj,newi,newj,placeHolder)
+    // int placeHolder = 0
+
+    // if newPlace = S 
+    // movement(oldi,oldj,newi,newj,placeHolder)
+    // int placeHolder = 1
+
+    // if newPlace = F:
+    // print finish maze string
+    // exits program
+
+    //return placeHolder
+}
+
+void move (int newi, int newj, int oldi, int oldj, int placeHolder) //executes the movement 
+{
+    // in 2d array set maze[newi][newj] = 'X'
+
+    // if placeHolder = 0
+    // maze[oldi][oldj] = ' '  
+
+    // if placeHolder = 1
+    // maze [oldi][oldj] = 'S'
+}
+
+int main (int argc, char *argv[]) {
+    //check arguments
+    //if (argc != 2)
+    //print error code
+
+    // getMap (argv[1]) // gets map and opens it
+
+    // showInstructions ()
+    // showMap ()
+
+    // int placeHolder = 0
+    // this sets the placeHolder as 0 to begin with because you always start on S
+
+    // while (1)
+        // wait for input:
+
+        // switch (input)
+            // w/a/s/d/W/A/S/D: checkMovement(input,placeHolder)
+            // a new value for placeHolder is returned to use in next instance
+
+            // m: show map()
+
+            // q: print exiting statement and exit program // exit(0)
+
+            //default: print error code 
     
 }
 
-void checkMovement () { //to check if user is allowed to move
-    // if there is a # where they try to move
-    // print Error: Wall in the way. Try again.
 
-    // if it is the end of the map where they try to move
-    // print Error: Map Wall in the way. Try again.
+/* list of error codes/ print statements to use:
 
-    // if there is a ' ', or an S:
-    // allow user to carry out move
-    // updates position on map for player X
+for wrong number of arguments entered:
+Usage: mazeGame <filename>
 
-    // if there is a F:
-    // MAZE COMPLETED WELL DONE!
+for files that dont exist
+Error: Bad filename
 
-    // should this be a part of movement?? or happen before movememt
-}
+for when a wall is in the way:
+Error: Cannot move there
 
-int main () {
-    getMap (); // gets map and opens it
-    mapValidator () ; //validates the map
-    showInstructions (); //shows instructions
-        
-    //ask for input
-    // switch input
-    //case 'W || A || S || D || w || a || s || d ||':
-        // movement ();
-        // check movement ();
-    //case 'M || m|':
-        // show map ();
-    //case 'Q || q':
-        //closes the file and exits
-    showMap () ; //shows map
-    movement () ; //moves player
+for invalid input errors:
+Error: Invalid input
 
-}
+for any map formatting errors:
+Error: Map invalid format
+
+for when map is selected:
+"mapName" selected:
+
+for displaying instructions:
+-- Instructions --
+W to move up
+A to move left
+S to move down
+D to move right
+M to view the map
+Q to quit
+
+-- Rules --
+# are walls, you cant go through them
+S is the starting point
+F is the finishing point
+X is your position
+
+------------------------------
+
+Make your way to the F to win!
+
+------------------------------
+
+for when the map is displayed:
+-- Map --
+(MAP)....
+.........
 
 
-
-
-//how am i going to do this
-
-// things i need:
-// map: maze files (test data)
-// input files for navigation (test data)
-// how to move
-// cant move into walls
-// start
-// finish and actually 
-// main function
-// other functions inside of a header file (modularity)
+for when they get to 'F':
+Congratulations you finish the maze!
+*/
 
 

@@ -1,4 +1,4 @@
-echo -e "-- Argument Tests --"
+echo -e "\n-- Argument Tests --"
 #args
 echo -n "Testing no arguments - "
 #no args displays error code
@@ -35,7 +35,7 @@ echo -n "Testing correct arguments - "
 #opens and displays goodMap.txt and instructions
 ./mazeGame maps/goodMap.txt > tmp
 if grep -q "
-Map goodMap selected:
+goodMap selected:
 ######F###
 ###### ###
 ###### ###
@@ -93,9 +93,21 @@ echo -e "\n-- Good user inputs --"
 #movements
 
 echo -n "Testing W for forward - "
-#w moves forwards
-./mazeGame maps/goodMap.txt < userInput/up.txt > tmp
-if grep -q "Moved up" tmp;
+#w moves forwards and displays on map
+./mazeGame maps/testMap.txt < userInput/up.txt > tmp
+if grep -q "
+-- Map --
+##########
+##########
+#####F####
+#####X####
+#### S ###
+##### ####
+##########
+##########
+##########
+##########
+" tmp;
 then
     echo "PASS"
 else
@@ -105,19 +117,42 @@ fi
 
 echo -n "Testing A for left - "
 #a moves left
-./mazeGame maps/goodMap.txt < userInput/up.txt > tmp
-if grep -q "Moved left" tmp;
+./mazeGame maps/testMap.txt < userInput/up.txt > tmp
+if grep -q "
+-- Map --
+##########
+##########
+#####F####
+##### ####
+####XS ###
+##### ####
+##########
+##########
+##########
+##########
+" tmp;
 then
     echo "PASS"
 else
     echo "FAIL"
 fi
 
-
 echo -n "Testing S for down - "
 #s moves back
-./mazeGame maps/goodMap.txt < userInput/down.txt > tmp
-if grep -q "Moved left" tmp;
+./mazeGame maps/testMap.txt < userInput/down.txt > tmp
+if grep -q "
+-- Map --
+##########
+##########
+#####F####
+##### ####
+#### S ###
+#####X####
+##########
+##########
+##########
+##########
+" tmp;
 then
     echo "PASS"
 else
@@ -126,8 +161,19 @@ fi
 
 echo -n "Testing D for right - "
 #d moves right
-./mazeGame maps/goodMap.txt < userInput/right.txt > tmp
-if grep -q "Moved left" tmp;
+if grep -q "
+-- Map --
+##########
+##########
+#####F####
+##### ####
+#### SX###
+##### ####
+##########
+##########
+##########
+##########
+" tmp;
 then
     echo "PASS"
 else
@@ -148,8 +194,28 @@ if grep -q "
 # #    ###
 # ########
 # ########
-#S########
-" tmp;
+#X########" tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+fi
+
+echo -n "Testing X location on map - "
+#moves up, opens map and displays new correct location
+./mazeGame maps/goodMap.txt < userInput/moveAndOpenMap.txt > tmp
+if grep -q "
+-- Map --
+######F###
+###### ###
+###### ###
+###### ###
+#   ## ###
+# # ## ###
+# #    ###
+# ########
+#X########
+#S########" tmp;
 then
     echo "PASS"
 else
@@ -264,18 +330,45 @@ fi
 
 echo -e "\n-- Map Functionality --"
 #    rules
+
 echo -n "Testing ' ' - "
 #check if moving into ' ' moves into space displays error code
-#////
-
-
-
-
+./mazeGame maps/testMap.txt < userInput/up.txt > tmp
+if grep -q "
+-- Map --
+##########
+##########
+#####F####
+#####X####
+#### S ###
+##### ####
+##########
+##########
+##########
+##########" tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+fi
 
 echo -n "Testing '#' - "
 #check if moving into '#' doesnt work and displays error code
 ./mazeGame maps/testWall.txt < key/wallKey.txt > tmp
-if grep -q "Error: Cannot move there" tmp;
+if grep -q "
+Error: Cannot move there
+-- Map --
+######F###
+###### ###
+###### ###
+###### ###
+#   ## ###
+# # ## ###
+# #    ###
+# ########
+##########
+#X########
+" tmp;
 then
     echo "PASS"
 else
@@ -284,16 +377,30 @@ fi
 
 echo -n "Testing 'S' - "
 #check if moving into 'S' moves into space 
-
-
-
-
+./mazeGame maps/testMap.txt < key/startKey.txt > tmp
+if grep -q "
+-- Map --
+##########
+##########
+#####F####
+##### ####
+#### X ###
+##### ####
+##########
+##########
+##########
+##########" tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+fi
 
 
 echo -n "Testing 'F' - "
 #check if moving into 'F' finishes the maze and exits program.
 ./mazeGame maps/finishMap.txt < key/finishKey.txt > tmp
-if grep -q "Error: Cannot move there" tmp;
+if grep -q "Congratulations you finish the maze!" tmp;
 then
     echo "PASS"
 else
@@ -319,5 +426,6 @@ else
     echo "FAIL"
 fi
 
+echo -e 
 
-rm tmp
+rm -f tmp
