@@ -1,11 +1,11 @@
 #include <stdio.h>
 
-void test ()
-{
-    printf("hello world\n");
-}
-
 int main () {
-    test ();
+    char character[0];
+    for (int i = 0; i<2; i++)
+    {
+        scanf("%s", character);
+        printf("%s\n", character);
+    }
     return 0;
 }

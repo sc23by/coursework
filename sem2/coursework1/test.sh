@@ -1,7 +1,7 @@
 echo -e "\n-- Argument Tests --"
-#args
+
 echo -n "Testing no arguments - "
-#no args displays error code
+# no args should display error code
 ./mazeGame > tmp
 if grep -q "Usage: mazeGame <filename>" tmp;
 then
@@ -10,8 +10,8 @@ else
     echo "FAIL"
 fi
 
-echo -n "Testing 2 arguments (too many) - "
-#too many args displays error code
+echo -n "Testing too manyarguments - "
+# too many args should display error code, tests 2 arguments
 ./mazeGame extra extra > tmp
 if grep -q "Usage: mazeGame <filename>" tmp;
 then
@@ -20,9 +20,8 @@ else
     echo "FAIL"
 fi
 
-echo -n "Testing incorrect argument - "
-#args is not a map numberecho -n "Testing 2 arguments (too many) - "
-#too many args displays error code
+echo -n "Testing bad argument - "
+# args entered is not a map name, should display error code "
 ./mazeGame maps/notAMap.txt > tmp
 if grep -q "Error: Bad filename" tmp;
 then
@@ -32,11 +31,11 @@ else
 fi
 
 echo -n "Testing correct arguments - "
-#opens and displays goodMap.txt and instructions
+# should open and display goodMap.txt and instructions
 ./mazeGame maps/goodMap.txt > tmp
 if grep -q "
 goodMap selected:
-######F###
+######E###
 ###### ###
 ###### ###
 ###### ###
@@ -58,12 +57,12 @@ Q to quit
 -- Rules --
 # are walls, you cant go through them
 S is the starting point
-F is the finishing point
+E is the finishing point
 X is your position
 
 ------------------------------
 
-Make your way to the F to win!
+Make your way to the E to win!
 
 ------------------------------
 " tmp;
@@ -73,13 +72,10 @@ else
     echo "FAIL"
 fi
 
-
-
 echo -e "\n-- Bad user inputs --"
-#user inputs
 
 echo -n "Testing invalid keystroke - "
-#wrong user input displays error code
+# wrong user input should display error code
 ./mazeGame maps/goodMap.txt < userInput/incorrectKeystroke.txt > tmp
 if grep -q "Error: Invalid input" tmp;
 then
@@ -88,104 +84,110 @@ else
     echo "FAIL"
 fi
 
+echo -e "\n-- Map Tests --"
+
+echo -n "Testing map too small - "
+# if map too small should display error code
+./mazeGame maps/smallMap.txt > tmp
+if grep -q "Error: Map invalid format" tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+fi
+
+echo -n "Testing map too big - "
+# if map too big should display error code
+./mazeGame maps/bigMap.txt > tmp
+if grep -q "Error: Map invalid format" tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+fi
+
+echo -n "Testing map doesn't contain 'S' - "
+# if map doesnt contain S should display error code
+./mazeGame maps/noS.txt > tmp
+if grep -q "Error: Map invalid format" tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+fi
+
+echo -n "Testing map too many S's - "
+# if map has more than one S should display error code
+./mazeGame maps/noS.txt > tmp
+if grep -q "Error: Map invalid format" tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+fi
+
+echo -n "Testing map doesn't contain 'E' - "
+# if map doesnt contain 'E' should display error code
+./mazeGame maps/noF.txt > tmp
+if grep -q "Error: Map invalid format" tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+fi
+
+echo -n "Testing map too many E's - "
+# if map contains more than one 'E' should display error code
+./mazeGame maps/noF.txt > tmp
+if grep -q "Error: Map invalid format" tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+fi
+
+echo -n "Testing map contains invalid character - "
+# if map does not only only contain #, ,S,E should display error code
+./mazeGame maps/badCharacters.txt > tmp
+if grep -q "Error: Map invalid format" tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+fi
+
+echo -n "Testing map all columns same length - "
+# if column lengths arent the same should display error code
+./mazeGame maps/badColumns.txt > tmp
+if grep -q "Error: Map invalid format" tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+fi
+
+echo -n "Testing map all row same length - "
+# if row lengths arent the same should display error code
+./mazeGame maps/badRows.txt > tmp
+if grep -q "Error: Map invalid format" tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+fi
+
+
+
+
+
 echo -e "\n-- Good user inputs --"
-#Outputs
-#movements
 
-echo -n "Testing W for forward - "
-#w moves forwards and displays on map
-./mazeGame maps/testMap.txt < userInput/up.txt > tmp
+echo -n "Testing 'M' to open map - "
+# M should open map and display 'X' as where you are (the start)
+echo "M" |./mazeGame maps/goodMap.txt > tmp
 if grep -q "
 -- Map --
-##########
-##########
-#####F####
-#####X####
-#### S ###
-##### ####
-##########
-##########
-##########
-##########
-" tmp;
-then
-    echo "PASS"
-else
-    echo "FAIL"
-fi
-
-
-echo -n "Testing A for left - "
-#a moves left
-./mazeGame maps/testMap.txt < userInput/up.txt > tmp
-if grep -q "
--- Map --
-##########
-##########
-#####F####
-##### ####
-####XS ###
-##### ####
-##########
-##########
-##########
-##########
-" tmp;
-then
-    echo "PASS"
-else
-    echo "FAIL"
-fi
-
-echo -n "Testing S for down - "
-#s moves back
-./mazeGame maps/testMap.txt < userInput/down.txt > tmp
-if grep -q "
--- Map --
-##########
-##########
-#####F####
-##### ####
-#### S ###
-#####X####
-##########
-##########
-##########
-##########
-" tmp;
-then
-    echo "PASS"
-else
-    echo "FAIL"
-fi
-
-echo -n "Testing D for right - "
-#d moves right
-if grep -q "
--- Map --
-##########
-##########
-#####F####
-##### ####
-#### SX###
-##### ####
-##########
-##########
-##########
-##########
-" tmp;
-then
-    echo "PASS"
-else
-    echo "FAIL"
-fi
-
-echo -n "Testing m to open map - "
-#m opens map and displays where you are
-./mazeGame maps/goodMap.txt < userInput/openMap.txt > tmp
-if grep -q "
--- Map --
-######F###
+######E###
 ###### ###
 ###### ###
 ###### ###
@@ -201,12 +203,12 @@ else
     echo "FAIL"
 fi
 
-echo -n "Testing X location on map - "
-#moves up, opens map and displays new correct location
-./mazeGame maps/goodMap.txt < userInput/moveAndOpenMap.txt > tmp
+echo -n "Testing 'm' to open map - "
+# m should open map and displays where you are (the start)
+echo "m" |./mazeGame maps/goodMap.txt > tmp
 if grep -q "
 -- Map --
-######F###
+######E###
 ###### ###
 ###### ###
 ###### ###
@@ -214,17 +216,206 @@ if grep -q "
 # # ## ###
 # #    ###
 # ########
-#X########
-#S########" tmp;
+# ########
+#X########" tmp;
 then
     echo "PASS"
 else
     echo "FAIL"
 fi
 
-echo -n "Testing q to quit - "
-#q quits the maze
-./mazeGame maps/goodMap.txt < userInput/quit.txt > tmp
+# all movement key tests rely on open map tests being sucessful 
+
+echo -n "Testing 'W' for up - "
+# 'W' should move up the 'X' from the centre and display on map
+echo "W" "m" |./mazeGame maps/testMap.txt > tmp
+if grep -q "
+-- Map --
+##########
+##########
+#####E####
+#####X####
+#### S ###
+##### ####
+##########
+##########
+##########
+##########
+" tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+fi
+
+echo -n "Testing 'w' for up - "
+# 'w' should move up the 'X' from the centre and display on map
+echo "w" "m" |./mazeGame maps/testMap.txt > tmp
+if grep -q "
+-- Map --
+##########
+##########
+#####E####
+#####X####
+#### S ###
+##### ####
+##########
+##########
+##########
+##########
+" tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+fi
+
+echo -n "Testing 'A' for left - "
+# 'A' should move up the 'X' from the centre and display on map
+echo "A" "m" |./mazeGame maps/testMap.txt > tmp
+if grep -q "
+-- Map --
+##########
+##########
+#####E####
+##### ####
+####XS ###
+##### ####
+##########
+##########
+##########
+##########
+" tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+fi
+
+echo -n "Testing 'a' for left - "
+# 'a' should move up the 'X' from the centre and display on map
+echo "a" "m" |./mazeGame maps/testMap.txt > tmp
+if grep -q "
+-- Map --
+##########
+##########
+#####E####
+##### ####
+####XS ###
+##### ####
+##########
+##########
+##########
+##########
+" tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+fi
+
+echo -n "Testing 'S' for down - "
+# 'S' should move down the 'X' from the centre and display on map
+echo "S" "m" |./mazeGame maps/testMap.txt > tmp
+if grep -q "
+-- Map --
+##########
+##########
+#####E####
+##### ####
+#### S ###
+#####X####
+##########
+##########
+##########
+##########
+" tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+fi
+
+echo -n "Testing 's' for down - "
+# 's' should move down the 'X' from the centre and display on map
+echo "s" "m" |./mazeGame maps/testMap.txt > tmp
+if grep -q "
+-- Map --
+##########
+##########
+#####E####
+##### ####
+#### S ###
+#####X####
+##########
+##########
+##########
+##########
+" tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+fi
+
+echo -n "Testing D for right - "
+# 'D' should move up the 'X' from the centre and display on map
+echo "D" "m" |./mazeGame maps/testMap.txt > tmp
+if grep -q "
+-- Map --
+##########
+##########
+#####E####
+##### ####
+#### SX###
+##### ####
+##########
+##########
+##########
+##########
+" tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+fi
+
+echo -n "Testing 'd' for right - "
+# 'd' should move right the 'X' from the centre and display on map
+echo "d" "m" |./mazeGame maps/testMap.txt > tmp
+if grep -q "
+-- Map --
+##########
+##########
+#####E####
+##### ####
+#### SX###
+##### ####
+##########
+##########
+##########
+##########
+" tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+fi
+
+
+echo -n "Testing 'Q' to quit - "
+# 'Q' quits the maze
+echo "Q" | ./mazeGame maps/goodMap.txt > tmp
+if grep -q "Exiting maze" tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+fi
+
+echo -n "Testing 'q' to quit - "
+# 'q' quits the maze
+echo "q" |./mazeGame maps/goodMap.txt > tmp
 if grep -q "Exiting maze" tmp;
 then
     echo "PASS"
@@ -233,112 +424,20 @@ else
 fi
 
 
-echo -e "\n-- Map Tests --"
-#    files
-#    map
-
-echo -n "Testing map too small - "
-#check if map too small displays error code
-./mazeGame maps/smallMap.txt > tmp
-if grep -q "Error: Map invalid format" tmp;
-then
-    echo "PASS"
-else
-    echo "FAIL"
-fi
-
-echo -n "Testing map too big - "
-#check if map too big displays error code
-./mazeGame maps/bigMap.txt > tmp
-if grep -q "Error: Map invalid format" tmp;
-then
-    echo "PASS"
-else
-    echo "FAIL"
-fi
-
-echo -n "Testing map doesn't contain S - "
-#check if map doesnt contain S displays error code
-./mazeGame maps/noS.txt > tmp
-if grep -q "Error: Map invalid format" tmp;
-then
-    echo "PASS"
-else
-    echo "FAIL"
-fi
-
-echo -n "Testing map too many S's - "
-#check if map has more than one S displays error code
-./mazeGame maps/noS.txt > tmp
-if grep -q "Error: Map invalid format" tmp;
-then
-    echo "PASS"
-else
-    echo "FAIL"
-fi
-
-echo -n "Testing map doesn't contain F - "
-#check if map doesnt contain F displays error code
-./mazeGame maps/noF.txt > tmp
-if grep -q "Error: Map invalid format" tmp;
-then
-    echo "PASS"
-else
-    echo "FAIL"
-fi
-
-echo -n "Testing map too many F's - "
-#check if map contains more than one F displays error code
-./mazeGame maps/noF.txt > tmp
-if grep -q "Error: Map invalid format" tmp;
-then
-    echo "PASS"
-else
-    echo "FAIL"
-fi
-
-echo -n "Testing map contains invalid character - "
-#check if map only contains #, ,S,F displays error code
-./mazeGame maps/badCharacters.txt > tmp
-if grep -q "Error: Map invalid format" tmp;
-then
-    echo "PASS"
-else
-    echo "FAIL"
-fi
-
-echo -n "Testing map all columns same length - "
-#check if column lengths arent the same displays error code
-./mazeGame maps/badColumns.txt > tmp
-if grep -q "Error: Map invalid format" tmp;
-then
-    echo "PASS"
-else
-    echo "FAIL"
-fi
-
-echo -n "Testing map all row same length - "
-#check if row lengths arent the same displays error code
-./mazeGame maps/badRows.txt > tmp
-if grep -q "Error: Map invalid format" tmp;
-then
-    echo "PASS"
-else
-    echo "FAIL"
-fi
 
 
 echo -e "\n-- Map Functionality --"
-#    rules
+
+# these tests rely on movement keys working and open map key working
 
 echo -n "Testing ' ' - "
-#check if moving into ' ' moves into space displays error code
+# if moving into ' ' moves into space X on the map moves
 ./mazeGame maps/testMap.txt < userInput/up.txt > tmp
 if grep -q "
 -- Map --
 ##########
 ##########
-#####F####
+#####E####
 #####X####
 #### S ###
 ##### ####
@@ -353,12 +452,12 @@ else
 fi
 
 echo -n "Testing '#' - "
-#check if moving into '#' doesnt work and displays error code
+# if moving into '#' displays error code and doesn't move X on the map
 ./mazeGame maps/testWall.txt < key/wallKey.txt > tmp
 if grep -q "
 Error: Cannot move there
 -- Map --
-######F###
+######E###
 ###### ###
 ###### ###
 ###### ###
@@ -376,13 +475,13 @@ else
 fi
 
 echo -n "Testing 'S' - "
-#check if moving into 'S' moves into space 
-./mazeGame maps/testMap.txt < key/startKey.txt > tmp
+# if moving into 'S', 'X' should move into 'S' on the map (moving up from S then down into it)
+echo "w" "s" | ./mazeGame maps/testMap.txt > tmp
 if grep -q "
 -- Map --
 ##########
 ##########
-#####F####
+#####E####
 ##### ####
 #### X ###
 ##### ####
@@ -397,10 +496,10 @@ else
 fi
 
 
-echo -n "Testing 'F' - "
-#check if moving into 'F' finishes the maze and exits program.
+echo -n "Testing 'E' - "
+# if moving into 'E' should print finishing statement
 ./mazeGame maps/finishMap.txt < key/finishKey.txt > tmp
-if grep -q "Congratulations you finish the maze!" tmp;
+if grep -q "Congratulations you finished the maze!" tmp;
 then
     echo "PASS"
 else

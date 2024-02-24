@@ -5,7 +5,9 @@
 
 // struct for maze maps
 typedef struct {
-    char mapCharacters [100][100];
+    int rows;
+    int columns;
+    char mapCharacters[100][100];
 } maze;
 // map size max 100 rectangle
 
@@ -24,8 +26,6 @@ int getMap (char mapName) // input is a map name, opens it, and checks some requ
     // print error code
     // return 1
 
-    // store map contents in struct
-
     // check map contains exactly one 'S' and 'E'
     // if map does not contain one 'S' or one 'E'
     // print error code
@@ -36,7 +36,13 @@ int getMap (char mapName) // input is a map name, opens it, and checks some requ
     // print error code
     // return 1
 
-    // check map only contains '
+    // check map only contains characters 'S','E','#',' '
+    // if not, print error code
+    //return 1
+
+    // number of rows and columns, then store struct 
+    // and store map in 2d array in the struct
+    
 
     //return 0
 }
@@ -86,6 +92,14 @@ int checkMovement (char input, int placeHolder) {
         // store [i] = int new i and [j] = int new j
         //read character (newPlace = character)
         //return newPlace
+
+
+    //if int newi < 0 or newi > maze int columns
+        //print error code
+
+    //if int newj < 0 or newj > maze int rows
+        //print error code
+
 
     // if newPlace = '#' 
         // print error code
@@ -146,6 +160,7 @@ int main (int argc, char *argv[]) {
             //default: print error code 
     
 }
+
 
 
 /* list of error codes/ print statements to use:
