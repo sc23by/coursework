@@ -10,7 +10,7 @@ else
     echo "FAIL"
 fi
 
-echo -n "Testing too manyarguments - "
+echo -n "Testing too many arguments - "
 # too many args should display error code, tests 2 arguments
 ./mazeGame extra extra > tmp
 if grep -q "Usage: mazeGame <filename>" tmp;
@@ -33,39 +33,7 @@ fi
 echo -n "Testing correct arguments - "
 # should open and display goodMap.txt and instructions
 ./mazeGame maps/goodMap.txt > tmp
-if grep -q "
-goodMap selected:
-######E###
-###### ###
-###### ###
-###### ###
-#   ## ###
-# # ## ###
-# #    ###
-# ########
-# ########
-#S########
-
--- Instructions --
-W to move up
-A to move left
-S to move down
-D to move right
-M to view the map
-Q to quit
-
--- Rules --
-# are walls, you cant go through them
-S is the starting point
-E is the finishing point
-X is your position
-
-------------------------------
-
-Make your way to the E to win!
-
-------------------------------
-" tmp;
+if grep -q "#S## # # #" tmp;
 then
     echo "PASS"
 else
@@ -183,20 +151,9 @@ fi
 echo -e "\n-- Good user inputs --"
 
 echo -n "Testing 'M' to open map - "
-# M should open map and display 'X' as where you are (the start)
+# M should open map and display an X where the S was
 echo "M" |./mazeGame maps/goodMap.txt > tmp
-if grep -q "
--- Map --
-######E###
-###### ###
-###### ###
-###### ###
-#   ## ###
-# # ## ###
-# #    ###
-# ########
-# ########
-#X########" tmp;
+if grep -q "#X## # # #" tmp;
 then
     echo "PASS"
 else
@@ -204,198 +161,54 @@ else
 fi
 
 echo -n "Testing 'm' to open map - "
-# m should open map and displays where you are (the start)
+# m should show map and displays an X where the S was
 echo "m" |./mazeGame maps/goodMap.txt > tmp
-if grep -q "
--- Map --
-######E###
-###### ###
-###### ###
-###### ###
-#   ## ###
-# # ## ###
-# #    ###
-# ########
-# ########
-#X########" tmp;
+if grep -q "#X## # # #" tmp;
 then
     echo "PASS"
 else
     echo "FAIL"
 fi
 
-# all movement key tests rely on open map tests being sucessful 
 
-echo -n "Testing 'W' for up - "
+# all movement key tests rely on show map tests being sucessful 
+
+echo -n "Testing 'W/w' for up - "
 # 'W' should move up the 'X' from the centre and display on map
-echo "W" "m" |./mazeGame maps/testMap.txt > tmp
-if grep -q "
--- Map --
-##########
-##########
-#####E####
-#####X####
-#### S ###
-##### ####
-##########
-##########
-##########
-##########
-" tmp;
+# movement keys also test that ' ' can be moved into
+echo "W" "w" "m" |./mazeGame maps/testMap.txt > tmp
+if grep -q "# ###X####" tmp;
 then
     echo "PASS"
 else
     echo "FAIL"
 fi
 
-echo -n "Testing 'w' for up - "
-# 'w' should move up the 'X' from the centre and display on map
-echo "w" "m" |./mazeGame maps/testMap.txt > tmp
-if grep -q "
--- Map --
-##########
-##########
-#####E####
-#####X####
-#### S ###
-##### ####
-##########
-##########
-##########
-##########
-" tmp;
-then
-    echo "PASS"
-else
-    echo "FAIL"
-fi
-
-echo -n "Testing 'A' for left - "
-# 'A' should move up the 'X' from the centre and display on map
+echo -n "Testing 'A/a' for left - "
+# 'A/a' should move up the 'X' from the centre and display on map
 echo "A" "m" |./mazeGame maps/testMap.txt > tmp
-if grep -q "
--- Map --
-##########
-##########
-#####E####
-##### ####
-####XS ###
-##### ####
-##########
-##########
-##########
-##########
-" tmp;
+if grep -q "###X S ###" tmp;
 then
     echo "PASS"
 else
     echo "FAIL"
 fi
 
-echo -n "Testing 'a' for left - "
-# 'a' should move up the 'X' from the centre and display on map
-echo "a" "m" |./mazeGame maps/testMap.txt > tmp
-if grep -q "
--- Map --
-##########
-##########
-#####E####
-##### ####
-####XS ###
-##### ####
-##########
-##########
-##########
-##########
-" tmp;
+
+echo -n "Testing 'S/s' for down - "
+# 'S/s' should move down the 'X' from the centre and display on map
+echo "S" "s" "m" |./mazeGame maps/testMap.txt > tmp
+if grep -q "#####X## #" tmp;
 then
     echo "PASS"
 else
     echo "FAIL"
 fi
 
-echo -n "Testing 'S' for down - "
-# 'S' should move down the 'X' from the centre and display on map
-echo "S" "m" |./mazeGame maps/testMap.txt > tmp
-if grep -q "
--- Map --
-##########
-##########
-#####E####
-##### ####
-#### S ###
-#####X####
-##########
-##########
-##########
-##########
-" tmp;
-then
-    echo "PASS"
-else
-    echo "FAIL"
-fi
-
-echo -n "Testing 's' for down - "
-# 's' should move down the 'X' from the centre and display on map
-echo "s" "m" |./mazeGame maps/testMap.txt > tmp
-if grep -q "
--- Map --
-##########
-##########
-#####E####
-##### ####
-#### S ###
-#####X####
-##########
-##########
-##########
-##########
-" tmp;
-then
-    echo "PASS"
-else
-    echo "FAIL"
-fi
-
-echo -n "Testing D for right - "
-# 'D' should move up the 'X' from the centre and display on map
-echo "D" "m" |./mazeGame maps/testMap.txt > tmp
-if grep -q "
--- Map --
-##########
-##########
-#####E####
-##### ####
-#### SX###
-##### ####
-##########
-##########
-##########
-##########
-" tmp;
-then
-    echo "PASS"
-else
-    echo "FAIL"
-fi
-
-echo -n "Testing 'd' for right - "
-# 'd' should move right the 'X' from the centre and display on map
-echo "d" "m" |./mazeGame maps/testMap.txt > tmp
-if grep -q "
--- Map --
-##########
-##########
-#####E####
-##### ####
-#### SX###
-##### ####
-##########
-##########
-##########
-##########
-" tmp;
+echo -n "Testing 'D/d' for right - "
+# 'D/d' should move up the 'X' from the centre and display on map
+echo "D" "d" "m" |./mazeGame maps/testMap.txt > tmp
+if grep -q "#### S X##" tmp;
 then
     echo "PASS"
 else
@@ -430,71 +243,35 @@ echo -e "\n-- Map Functionality --"
 
 # these tests rely on movement keys working and open map key working
 
-echo -n "Testing ' ' - "
-# if moving into ' ' moves into space X on the map moves
-./mazeGame maps/testMap.txt < userInput/up.txt > tmp
-if grep -q "
--- Map --
-##########
-##########
-#####E####
-#####X####
-#### S ###
-##### ####
-##########
-##########
-##########
-##########" tmp;
-then
-    echo "PASS"
-else
-    echo "FAIL"
-fi
-
-echo -n "Testing '#' - "
-# if moving into '#' displays error code and doesn't move X on the map
+echo -n "Testing '#' error code - "
+# if moving into '#' displays error code
 ./mazeGame maps/testWall.txt < key/wallKey.txt > tmp
-if grep -q "
-Error: Cannot move there
--- Map --
-######E###
-###### ###
-###### ###
-###### ###
-#   ## ###
-# # ## ###
-# #    ###
-# ########
-##########
-#X########
-" tmp;
+if grep -q "Error: Cannot move there" tmp;
 then
     echo "PASS"
 else
     echo "FAIL"
 fi
 
-echo -n "Testing 'S' - "
+echo -n "Testing '#' X doesn't move - "
+# if moving into '#' it doesn't move X on the map
+./mazeGame maps/testWall.txt < key/wallKey.txt > tmp
+if grep -q "#X####   #" tmp;
+then
+    echo "PASS"
+else
+    echo "FAIL"
+fi
+
+echo -n "Testing 'S' can be moved into - "
 # if moving into 'S', 'X' should move into 'S' on the map (moving up from S then down into it)
-echo "w" "s" | ./mazeGame maps/testMap.txt > tmp
-if grep -q "
--- Map --
-##########
-##########
-#####E####
-##### ####
-#### X ###
-##### ####
-##########
-##########
-##########
-##########" tmp;
+echo "w" "s" "m" | ./mazeGame maps/testMap.txt > tmp
+if grep -q "#### X ###" tmp;
 then
     echo "PASS"
 else
     echo "FAIL"
 fi
-
 
 echo -n "Testing 'E' - "
 # if moving into 'E' should print finishing statement
