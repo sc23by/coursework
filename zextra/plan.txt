@@ -1,0 +1,159 @@
+// testing what i need:
+
+// error handling:  cant move into walls
+//                  cant move off map
+//                  finish when finihs
+//                  start where start
+//                  map shows up when map
+//                  movement keys work (all 4)
+//                  location is mapped
+//                  movement istructuions
+//                  quit quits
+
+//                  extra: making sure map is valid
+//                         by having an answer key 
+//                         and making sure answer key 
+//                         works by testing it
+//                        
+
+// mistakes handling: inputs
+//                    invalid inputs shows error 
+//                    and isntructions
+//                    
+//                    
+// sucess/failure testing
+// comments
+
+- The name of the executable
+- The arguments you are using
+- The user inputs
+- The output
+
+# Args
+- no args
+- wrong number (2)
+
+# File IO
+
+- bad filename
+- bad permissions?????
+- data in wrong format (missing)
+- data with negative grade
+- data with >100 grade
+- success - shows 'loaded' message
+
+# User input errors
+
+- wrong menu option
+- empty menu option
+- non existant student ID
+
+# Outputs
+
+
+# Success
+
+- correct display for 1
+- correct display for student ID
+- correct average grade (normal)
+- correct average grade (no data)
+- correct number of records
+
+
+    args//
+no args displays error code
+too many args displays error code
+args is not a map number
+correct argument opens map and displays it
+
+
+    user inputs
+wrong user input displays error code
+
+    Outputs
+    movements
+w moves forwards
+a moves left
+s moves back
+d moves right
+m opens map and displays where you are
+q quits the maze
+
+    files
+    map
+map too small displays error code
+map too big displays error code
+map doesnt contain S or F displays error code
+column lengths arent the same
+row lengths arent the same
+
+    rules
+moving into '#' doesnt work and displays error code
+moving into ' ' moves into space
+moving into 'S' moves into space
+moving into 'F' finishes the maze and exits program.
+
+error codes: 
+Error: Pass a name of a map file as argument
+Error: Invalid input
+
+
+
+
+
+
+
+// testing what i need:
+
+// error handling:  cant move into walls
+//                  cant move off map
+//                  finish when finihs
+//                  start where start
+//                  map shows up when map
+//                  movement keys work (all 4)
+                    /
+                    //
+                    ///
+//                  location is mapped
+//                  movement istructuions
+//                  quit quits
+
+//                  extra: making sure map is valid
+//                         by having an answer key 
+//                         and making sure answer key 
+//                         works by testing it
+//                        
+
+// mistakes handling: inputs
+//                    invalid inputs shows error 
+//                    and isntructions
+//                    
+//                    
+// sucess/failure testing
+// comments
+
+
+# Args
+- no args
+- wrong number (2)
+
+
+-- Instructions --
+W to move up
+A to move left
+S to move down
+D to move right
+M to view the map
+Q to quit
+
+-- Rules --
+# are walls, you cant go through them
+S is the starting point
+F is the finishing point
+X is your position
+
+------------------------------
+
+Make your way to the F to win!
+
+------------------------------
